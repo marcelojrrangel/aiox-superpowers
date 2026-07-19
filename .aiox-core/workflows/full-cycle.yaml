@@ -1,0 +1,32 @@
+name: full-cycle
+description: Ciclo completo de desenvolvimento da ideia ao merge
+
+phases:
+  - name: brainstorm
+    agent: aiox-analyst
+    skills: [brainstorming]
+    description: Entender o problema real e explorar alternativas
+    output: docs/designs/<feature>.md
+
+  - name: plan
+    agent: aiox-architect
+    skills: [writing-plans, tactical-ddd]
+    description: Criar plano detalhado de implementação
+    output: docs/plans/<feature>.md
+
+  - name: implement
+    agent: aiox-dev
+    skills: [test-driven-development, subagent-driven-development]
+    description: Executar plano com TDD
+    parallel: true
+    checkpoints: after-each-batch
+
+  - name: review
+    agent: aiox-qa
+    skills: [verification-before-completion, requesting-code-review]
+    description: Revisar código contra plano e gates de qualidade
+
+  - name: finish
+    agent: aiox-devops
+    skills: [finishing-a-development-branch]
+    description: Merge, PR ou manter branch

@@ -1,0 +1,24 @@
+name: brownfield-discovery
+description: Descobrir e entender codebase existente antes de fazer mudanças
+
+phases:
+  - name: explore
+    agent: aiox-master
+    skills: [codenavi]
+    description: Mapear estrutura da codebase e componentes principais
+    output: docs/discovery/mapa-da-codebase.md
+
+  - name: analyze
+    agent: aiox-architect
+    skills: [tactical-ddd, codenavi]
+    description: Entender modelo de domínio e arquitetura
+
+  - name: document
+    agent: aiox-master
+    skills: []
+    description: Documentar descobertas e criar plano de melhoria
+
+  - name: plan
+    agent: aiox-architect
+    skills: [writing-plans]
+    description: Criar plano de refatoração ou feature

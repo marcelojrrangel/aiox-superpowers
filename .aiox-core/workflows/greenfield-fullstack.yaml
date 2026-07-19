@@ -1,0 +1,45 @@
+name: greenfield-fullstack
+description: Construir aplicação full-stack nova do zero
+
+phases:
+  - name: brainstorm
+    agent: aiox-analyst
+    skills: [brainstorming]
+    description: Definir visão e requisitos do projeto
+    output: docs/designs/visao-do-projeto.md
+
+  - name: architecture
+    agent: aiox-architect
+    skills: [tactical-ddd, writing-plans, aws-advisor]
+    description: Projetar arquitetura do sistema
+    output: docs/architecture.md
+
+  - name: setup
+    agent: aiox-devops
+    skills: [git-worktrees]
+    description: Inicializar estrutura do projeto e CI/CD
+
+  - name: implement-backend
+    agent: aiox-dev
+    skills: [test-driven-development, subagent-driven-development]
+    description: Implementar serviços backend
+
+  - name: implement-frontend
+    agent: aiox-dev
+    skills: [test-driven-development, figma]
+    description: Implementar UI frontend
+
+  - name: integration
+    agent: aiox-dev
+    skills: [test-driven-development]
+    description: Conectar frontend e backend
+
+  - name: quality
+    agent: aiox-qa
+    skills: [web-quality-audit, security-best-practices]
+    description: Executar auditorias de qualidade e segurança
+
+  - name: deploy
+    agent: aiox-devops
+    skills: [aws-advisor]
+    description: Fazer deploy em produção

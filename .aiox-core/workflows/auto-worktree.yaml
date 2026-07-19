@@ -1,0 +1,24 @@
+name: auto-worktree
+description: Desenvolvimento paralelo usando git worktrees
+
+phases:
+  - name: create-worktrees
+    agent: aiox-devops
+    skills: [using-git-worktrees]
+    description: Criar worktrees isolados para trabalho paralelo
+
+  - name: parallel-implement
+    agent: aiox-orchestrator
+    skills: [subagent-driven-development, dispatching-parallel-agents]
+    description: Despachar múltiplos agentes em paralelo
+    parallel: true
+
+  - name: integrate
+    agent: aiox-devops
+    skills: [finishing-a-development-branch]
+    description: Fazer merge de todas as branches e resolver conflitos
+
+  - name: verify
+    agent: aiox-qa
+    skills: [verification-before-completion]
+    description: Executar suíte completa de testes e verificações de qualidade

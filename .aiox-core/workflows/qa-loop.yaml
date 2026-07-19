@@ -1,0 +1,52 @@
+name: qa-loop
+description: Ciclo sistemático de debugging, correção e resiliência
+
+phases:
+  - name: reproduce
+    agent: aiox-qa
+    skills: [systematic-debugging]
+    description: Criar caso mínimo de reprodução
+    output: docs/bugs/<bug>.md
+
+  - name: fix
+    agent: aiox-dev
+    skills: [test-driven-development, systematic-debugging]
+    description: Escrever teste de regressão e implementar correção
+
+  - name: chaos-test
+    agent: aiox-qa
+    skills: [verification-before-completion]
+    description: >
+      Testar cenários de falha em transações distribuídas.
+      ATIVAR apenas quando o código envolve: transações SAGA,
+      mensageria entre serviços, chamadas síncronas externas,
+      ou padrões de compensação.
+    optional: true
+    trigger: "saga OR messaging OR distributed-transaction OR compensating-transaction"
+    scenarios:
+      - name: network-drop
+        description: Simular queda de rede durante processamento
+        verify: "transação compensatória executada, dados consistentes"
+      - name: timeout-retry
+        description: Simular timeout com retry exponencial
+        verify: "limite de tentativas respeitado, fallback ativado"
+      - name: duplicate-message
+        description: Simular recebimento de mensagem duplicada
+        verify: "idempotência garantida, estado inalterado"
+      - name: partial-failure
+        description: Simular falha parcial em batch de operações
+        verify: "operações bem-sucedidas preservadas, falhas compensadas"
+      - name: rollback-manual
+        description: Acionar rollback manual e verificar estado
+        verify: "rollback completo, sem órfãos, audit trail registrado"
+    output: docs/bugs/chaos-test-<bug>.md
+
+  - name: verify
+    agent: aiox-qa
+    skills: [verification-before-completion]
+    description: Verificar correção, checar regressões e validar resiliência
+
+  - name: review
+    agent: aiox-qa
+    skills: [requesting-code-review]
+    description: Revisar correção e documentar lições aprendidas

@@ -1,0 +1,146 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/qwen3.7-plus",
+  "small_model": "opencode-go/deepseek-v4-flash",
+  "instructions": [
+    ".opencode/AGENTS.md"
+  ],
+  "agent": {
+    "aiox-master": {
+      "model": "opencode-go/deepseek-v4-pro",
+      "description": "Orion — Mestre Orquestrador e Desenvolvedor do Framework. Expertise multidomínio, criação de componentes do framework, orquestração de workflows. Usa skill brainstorming antes de qualquer trabalho de design.",
+      "mode": "subagent",
+      "color": "#FFD700",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "git *": "ask", "git push": "deny", "npm *": "allow", "node *": "allow", "npx *": "allow", "*": "ask" } }
+    },
+    "aiox-orchestrator": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Orquestrador de Workflows e Coordenador de Equipe. Execução de workflows multi-agente e orquestração de ciclo de desenvolvimento. Despacha subagentes usando skill subagent-driven-development.",
+      "mode": "subagent",
+      "color": "#4A9EFF",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "git *": "ask", "git push": "deny", "npm *": "allow", "*": "ask" } }
+    },
+    "aiox-analyst": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Atlas — Analista de Negócios. Pesquisa de mercado, análise competitiva, pesquisa de usuário, brainstorming, estudos de viabilidade. Usa skill brainstorming para ideação.",
+      "mode": "subagent", "color": "#9B59B6",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "npm *": "allow", "*": "ask" } }
+    },
+    "aiox-pm": {
+      "model": "opencode-go/deepseek-v4-pro",
+      "description": "Morgan — Gerente de Produto. Criação de PRD, gestão de épicos, estratégia de produto, priorização de features, planejamento de roadmap.",
+      "mode": "subagent", "color": "#E67E22",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "npm *": "allow", "*": "ask" } }
+    },
+    "aiox-architect": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Aria — Arquiteta de Sistemas. Arquitetura de sistemas, seleção de stack tecnológica, design de API, arquitetura de segurança, estratégia de deploy. Usa skill tactical-ddd para modelagem de domínio.",
+      "mode": "subagent", "color": "#2ECC71",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "npm *": "allow", "*": "ask" } }
+    },
+    "aiox-ux": {
+      "model": "opencode-go/qwen3.7-plus",
+      "description": "Uma — Designer UX/UI e Arquiteta de Sistema de Design. Pesquisa de usuário, wireframes, sistemas de design, extração de tokens. Usa skill figma para design-to-code.",
+      "mode": "subagent", "color": "#E91E63",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "npm *": "allow", "*": "ask" } }
+    },
+    "aiox-sm": {
+      "model": "opencode-go/glm-5.2",
+      "description": "River — Scrum Master. Criação de user stories, validação de stories, critérios de aceitação, planejamento de sprint, refinamento de backlog. Usa skill writing-plans para divisão de tarefas.",
+      "mode": "subagent", "color": "#00BCD4",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "git *": "allow", "git push": "deny", "npm *": "allow", "*": "ask" } }
+    },
+    "aiox-dev": {
+      "model": "opencode-go/kimi-k2.7-code",
+      "description": "Dex — Desenvolvedor Full Stack. Implementação de código, debugging, refatoração, desenvolvimento de stories, builds autônomos. Usa skills test-driven-development e systematic-debugging.",
+      "mode": "subagent", "color": "#3498DB",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "git *": "allow", "git push": "deny", "npm *": "allow", "npx *": "allow", "node *": "allow", "dotnet *": "allow", "*": "ask" } }
+    },
+    "aiox-qa": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Quinn — Arquiteta de Testes e Consultora de Qualidade. Code review, gates de qualidade, arquitetura de testes, avaliação de risco, consultoria de qualidade. Usa skill verification-before-completion.",
+      "mode": "subagent", "color": "#27AE60",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "npm *": "allow", "npx *": "allow", "node *": "allow", "*": "ask" } }
+    },
+    "aiox-po": {
+      "model": "opencode-go/qwen3.7-plus",
+      "description": "Pax — Product Owner. Gestão de backlog, refinamento de stories, critérios de aceitação, planejamento de sprint, priorização.",
+      "mode": "subagent", "color": "#F39C12",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "git *": "ask", "git push": "deny", "*": "ask" } }
+    },
+    "aiox-data-engineer": {
+      "model": "opencode-go/deepseek-v4-pro",
+      "description": "Dara — Arquiteta de Dados e Engenheira de Operações. Design de banco de dados, schema, migrações, otimização de queries, modelagem de dados.",
+      "mode": "subagent", "color": "#1ABC9C",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "npm *": "allow", "npx *": "allow", "node *": "allow", "*": "ask" } }
+    },
+    "aiox-devops": {
+      "model": "opencode-go/qwen3.7-plus",
+      "description": "Gage — Especialista DevOps e Git Ops. Operações de repositório, CI/CD, gates de qualidade, push. ÚNICO agente autorizado a fazer push para remote.",
+      "mode": "subagent", "color": "#E74C3C",
+      "permission": { "read": "allow", "edit": "allow", "glob": "allow", "grep": "allow", "bash": { "git *": "allow", "npm *": "allow", "npx *": "allow", "node *": "allow", "gh *": "allow", "*": "ask" } }
+    },
+    "aiox-squad-creator": {
+      "model": "opencode-go/qwen3.7-plus",
+      "description": "Craft — Criador de Squads. Arquétipo construtor. Use para criar, validar, publicar e gerenciar squads.",
+      "mode": "subagent", "color": "#888888",
+      "permission": { "read": "allow", "edit": "allow", "bash": { "*": "ask" } }
+    }
+  },
+  "command": {
+    "aiox-help": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Mostrar ajuda do AIOX Superpowers — agentes, skills, comandos e workflows",
+      "agent": "aiox-master",
+      "template": "Mostre a visão geral da ajuda do AIOX Superpowers. Inclua: 1. Agentes disponíveis (listar todos os 13 com funções). 2. Como mencionar agentes com @. 3. Comandos disponíveis: /aiox-workflow, /aiox-story, /aiox-init, /aiox-brainstorm, /aiox-plan, /aiox-review. 4. Categorias de skills: Core (brainstorming, TDD, debugging), Domínio (segurança, DDD, AWS, Figma), Workflow (planos, reviews, git). 5. Leia .opencode/AGENTS.md para referência completa."
+    },
+    "aiox-init": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Inicializar ou verificar instalação do AIOX Superpowers",
+      "agent": "aiox-master",
+      "template": "Inicializar AIOX Superpowers no projeto atual: 1. Verificar se diretório .opencode/ existe. 2. Verificar se opencode.json tem todos os 13 agentes definidos. 3. Verificar se .opencode/skills/ tem todos os diretórios de skills. 4. Executar verificação: Node.js >= 18, npm >= 9. 5. Verificar se OpenCode CLI está instalado. 6. Mostrar resumo dos agentes, skills e workflows instalados."
+    },
+    "aiox-story": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Criar, gerenciar ou validar user stories com metodologia Superpowers",
+      "agent": "aiox-sm",
+      "template": "Gerenciar user stories usando metodologia Superpowers. Uso: /aiox-story create --name \"título\" — usa skill brainstorming para refinar requisitos, depois writing-plans para dividir em tarefas. /aiox-story validate <arquivo> — executar checklist de validação. /aiox-story list — escanear docs/stories/. Stories seguem abordagem TDD-first com critérios de aceitação."
+    },
+    "aiox-workflow": {
+      "model": "opencode-go/deepseek-v4-pro",
+      "description": "Executar workflow de desenvolvimento (ciclo-completo, qa-loop, greenfield, brownfield)",
+      "agent": "aiox-orchestrator",
+      "template": "Executar workflow de desenvolvimento. Disponíveis: ciclo-completo (brainstorm→plan→implementar→revisar→merge), qa-loop (systematic-debugging→corrigir→verificar), greenfield-fullstack, brownfield-discovery, auto-worktree. Carregar workflow de .aiox-core/workflows/<nome>.yaml. Usa subagent-driven-development para execução paralela de tarefas."
+    },
+    "aiox-brainstorm": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Iniciar sessão de brainstorming usando metodologia Superpowers",
+      "agent": "aiox-analyst",
+      "template": "Carregar skill brainstorming. Dê um passo para trás em vez de codar. Pergunte o que o usuário realmente quer fazer. Refine ideias vagas através de questões. Explore alternativas. Apresente design em partes digestíveis. Salve documento de design em docs/designs/."
+    },
+    "aiox-plan": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Criar plano de implementação a partir de design aprovado",
+      "agent": "aiox-architect",
+      "template": "Carregar skill writing-plans. Pegar design aprovado e dividir em tarefas pequenas (2-5 min cada). Toda tarefa tem caminhos de arquivo exatos, código completo, passos de verificação. Enfatizar TDD, YAGNI, DRY. Salvar plano em docs/plans/."
+    },
+    "aiox-review": {
+      "model": "opencode-go/glm-5.2",
+      "description": "Executar code review contra plano e gates de qualidade",
+      "agent": "aiox-qa",
+      "template": "Carregar skill requesting-code-review. Revisar código contra plano. Verificar: conformidade com spec, cobertura de testes, qualidade do código, segurança. Reportar problemas por severidade. Problemas críticos bloqueiam progresso. Usar verification-before-completion antes de declarar pronto."
+    },
+    "loop-architect": {
+      "model": "opencode-go/kimi-k2.7-code",
+      "description": "Loop Engineering — ciclo auto-corretivo com roadmap, testes e lições aprendidas",
+      "agent": "aiox-dev",
+      "template": "Carregar skill loop-engineering. Verificar roadmap.md, lessons.md, state.json. Ler estado atual e próxima tarefa. Executar loop: analisar → codar → testar (TDD) → auto-corrigir → atualizar estado. Executar testes após cada mudança. Se 2 tentativas consecutivas falharem no mesmo código, pare e pergunte ao usuário."
+    },
+    "aiox-status": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Status do projeto: consumo Go, saldo restante, viabilidade, modelos free disponíveis",
+      "agent": "aiox-master",
+      "template": "Executar /aiox-status: 1. Chamar usage-report(period: 'all') para ver saldo Go ($12/5h, $30/semana, $60/mês) e reset timer. 2. Verificar quais modelos free estão disponíveis. 3. Se houver tarefa pendente no contexto, chamar project-feasibility para análise. 4. Se viabilidade VERMELHO, alertar mas NÃO bloquear. 5. Mostrar resumo formatado ao dev."
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "aiox-superpowers",
+  "version": "1.0.0",
+  "description": "Hybrid framework combining AIOX Core multi-agent orchestration with Superpowers skill-driven methodology for OpenCode CLI",
+  "type": "module",
+  "main": ".opencode/plugins/aiox-superpowers.js",
+  "keywords": [
+    "aiox",
+    "superpowers",
+    "opencode",
+    "ai-orchestration",
+    "skills",
+    "tdd",
+    "agent",
+    "workflow"
+  ],
+  "homepage": "https://github.com/marcelojrrangel/aiox-superpowers",
+  "bugs": {
+    "url": "https://github.com/marcelojrrangel/aiox-superpowers/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Marcelo Jr Rangel",
+    "url": "https://github.com/marcelojrrangel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcelojrrangel/aiox-superpowers.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    ".opencode/",
+    ".aiox-core/",
+    ".agent/",
+    "opencode.json",
+    "README.md"
+  ]
+}

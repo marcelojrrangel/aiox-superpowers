@@ -1,0 +1,28 @@
+name: story-development
+description: Desenvolver uma user story do início ao fim
+
+phases:
+  - name: refine
+    agent: aiox-sm
+    skills: [brainstorming]
+    description: Refinar story com critérios de aceitação
+
+  - name: plan
+    agent: aiox-sm
+    skills: [writing-plans]
+    description: Dividir story em tarefas de implementação
+
+  - name: implement
+    agent: aiox-dev
+    skills: [test-driven-development]
+    description: Implementar story com TDD
+
+  - name: review
+    agent: aiox-qa
+    skills: [verification-before-completion, requesting-code-review]
+    description: Revisar e verificar conclusão da story
+
+  - name: finish
+    agent: aiox-devops
+    skills: [finishing-a-development-branch]
+    description: Criar PR e fazer merge
