@@ -42,8 +42,13 @@ Fusão da orquestração multi-agente do [AIOX Core](https://github.com/marceloj
 | `/aiox-review` | Executar code review com gates de qualidade |
 | `/loop-architect` | Loop auto-corretivo de desenvolvimento |
 | `/aiox-status` | Status do projeto: consumo Go, saldo restante, viabilidade |
+| `/aiox-cost` | Estimar custo com comparativo economy/balanced/premium |
+| `/aiox-free-run` | Executar workflow completo com modelos free (custo zero) |
 
-## Skills (22 no total)
+## Skills (23 no total)
+
+### Skill de Custo
+- `cost-aware-planning` — Estimar custo antes de executar. 3 tiers (economy/balanced/premium) com comparativo de qualidade e confirmação do usuário.
 
 ### Skills Core (do Superpowers)
 - `brainstorming` — Refinamento socrático do design antes de codar
@@ -120,6 +125,7 @@ O `model-router` tenta 4 tiers na ordem antes de perguntar ao usuário:
 | `model-router` | Cascata automática por categoria + logging em `.opencode/logs/model-usage.jsonl` |
 | `usage-report` | Relatório de consumo Go ($12/5h, $30/semana, $60/mês) com barras $, reset timer e modelos Free |
 | `project-feasibility` | Análise de viabilidade de tarefa: custo estimado vs saldo, verde/amarelo/vermelho |
+| `cost-estimator` | Estimativa de custo em 3 tiers (economy/balanced/premium) com comparativo de qualidade |
 
 ### Uso
 
@@ -141,8 +147,8 @@ usage-report({ period: "session" })  # ou "today" ou "all"
 .aiox-core/           # Workflows e definições de tarefas do AIOX
 .opencode/
   AGENTS.md           # Este arquivo
-  skills/             # 22 skills (core + domínio)
-  tools/              # Custom tools (model-ping, model-router, usage-report)
+  skills/             # 23 skills (custo + core + domínio)
+  tools/              # Custom tools (model-ping, model-router, usage-report, project-feasibility, cost-estimator)
   logs/               # Logs de uso de modelos (model-usage.jsonl)
   plugins/            # Bootstrap do plugin Superpowers
 .agent/workflows/     # Instruções de ativação dos agentes

@@ -110,7 +110,7 @@
       "model": "opencode-go/deepseek-v4-pro",
       "description": "Executar workflow de desenvolvimento (ciclo-completo, qa-loop, greenfield, brownfield)",
       "agent": "aiox-orchestrator",
-      "template": "Executar workflow de desenvolvimento. Disponíveis: ciclo-completo (brainstorm→plan→implementar→revisar→merge), qa-loop (systematic-debugging→corrigir→verificar), greenfield-fullstack, brownfield-discovery, auto-worktree. Carregar workflow de .aiox-core/workflows/<nome>.yaml. Usa subagent-driven-development para execução paralela de tarefas."
+      "template": "Executar workflow de desenvolvimento. Passos: 1. CARREGAR skill cost-aware-planning. 2. PERGUNTAR tipo de tarefa e chamar cost-estimator para mostrar custo estimado nos 3 tiers. 3. PERGUNTAR: 'Qual tier deseja usar? (economy/balanced/premium) — Veja custo e qualidade acima.' 4. AGUARDAR resposta do usuário. 5. Se 'cancelar', interromper. 6. Configurar model-router conforme o tier escolhido. 7. Carregar workflow de .aiox-core/workflows/<nome>.yaml. 8. Usar subagent-driven-development para execução paralela. 9. Ao final, chamar usage-report para mostrar custo real."
     },
     "aiox-brainstorm": {
       "model": "opencode-go/glm-5.2",
@@ -141,6 +141,18 @@
       "description": "Status do projeto: consumo Go, saldo restante, viabilidade, modelos free disponíveis",
       "agent": "aiox-master",
       "template": "Executar /aiox-status: 1. Chamar usage-report(period: 'all') para ver saldo Go ($12/5h, $30/semana, $60/mês) e reset timer. 2. Verificar quais modelos free estão disponíveis. 3. Se houver tarefa pendente no contexto, chamar project-feasibility para análise. 4. Se viabilidade VERMELHO, alertar mas NÃO bloquear. 5. Mostrar resumo formatado ao dev."
+    },
+    "aiox-cost": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Estimar custo de uma tarefa com comparativo entre tiers (economy/balanced/premium) e qualidade",
+      "agent": "aiox-master",
+      "template": "Carregar skill cost-aware-planning. Perguntar ao usuário qual o tipo de tarefa (quick_edit, feature, refactor, brownfield, greenfield, full_stack). Chamar cost-estimator com o tipo. Mostrar os 3 tiers com custo e qualidade. Perguntar: 'Deseja continuar? Escolha: economy, balanced, premium ou cancelar.' Se escolher um tier, executar model-router configurado para o tier e prosseguir. Se cancelar, parar."
+    },
+    "aiox-free-run": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "description": "Executar workflow completo usando APENAS modelos free (custo zero). Alerta de qualidade incluso.",
+      "agent": "aiox-orchestrator",
+      "template": "Executar workflow forçando modelos free. Passos: 1. Carregar skill cost-aware-planning. 2. Chamar cost-estimator com task_type informado e cost_tier: 'economy' para mostrar custo zero. 3. ALERTAR: 'Modo free ativado — qualidade 4-6/10. Para tarefas complexas, retrabalho pode gerar custo oculto. Deseja continuar?' 4. Se sim: configurar model-router forçando tier free (usar model-ping nos free models: deepseek-v4-flash-free, mimo-v2.5-free, north-mini-code-free, nemotron-3-ultra-free). 5. Dispatchar workflow com subagent-driven-development usando apenas os modelos free. 6. Ao final, chamar usage-report para mostrar custo real (deve ser $0)."
     }
   }
 }
