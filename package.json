@@ -4,6 +4,9 @@
   "description": "Hybrid framework combining AIOX Core multi-agent orchestration with Superpowers skill-driven methodology for OpenCode CLI",
   "type": "module",
   "main": ".opencode/plugins/aiox-superpowers.js",
+  "bin": {
+    "create-aiox-superpowers": "./bin/create-aiox-superpowers.cjs"
+  },
   "keywords": [
     "aiox",
     "superpowers",
@@ -34,6 +37,7 @@
     ".opencode/",
     ".aiox-core/",
     ".agent/",
+    "bin/",
     "opencode.json",
     "README.md"
   ]

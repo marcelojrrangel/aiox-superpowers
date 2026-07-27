@@ -14,8 +14,8 @@ Uma fusão de dois frameworks poderosos:
 ## Início Rápido
 
 ```bash
-# Criar novo projeto
-npx create-aiox-superpowers meu-projeto
+# Criar novo projeto (via GitHub - funciona sem publicar no npm)
+npx github:marcelojrrangel/aiox-superpowers meu-projeto
 cd meu-projeto
 opencode
 
