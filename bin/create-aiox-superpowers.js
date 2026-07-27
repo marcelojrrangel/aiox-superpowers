@@ -3,7 +3,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 const SOURCE_ROOT = path.resolve(__dirname, '..');
 
@@ -83,18 +82,6 @@ function mergeOpencodeJson(srcFile, dstFile) {
   fs.writeFileSync(dstFile, JSON.stringify(dst, null, 2) + '\n');
 }
 
-function installOpencodeDeps(targetDir) {
-  const opencodeDir = path.join(targetDir, '.opencode');
-  if (fs.existsSync(opencodeDir)) {
-    console.log('>> Instalando dependências do .opencode...');
-    try {
-      execSync('npm install', { cwd: opencodeDir, stdio: 'inherit' });
-    } catch {
-      console.warn('!! npm install falhou. Execute manualmente: cd .opencode && npm install');
-    }
-  }
-}
-
 function main() {
   const args = process.argv.slice(2);
 
@@ -169,8 +156,6 @@ function main() {
     }
   }
 
-  installOpencodeDeps(targetDir);
-
   console.log('');
   console.log('========================================');
   console.log(' AIOX Superpowers instalado com sucesso!');
@@ -185,11 +170,12 @@ function main() {
   console.log('   .opencode/plugins/    - Plugin bootstrap');
   console.log('   .aiox-core/workflows/ - 6 workflows');
   console.log('');
-  console.log(' Proximos passos:');
-  console.log(`   1. Acesse o projeto:  cd ${projectName}`);
-  console.log('   2. Abra o projeto:     opencode');
-  console.log('   3. Execute:            /aiox-init');
-  console.log('   4. Veja ajuda:        /aiox-help');
+   console.log(' Proximos passos:');
+   console.log(`   1. Acesse o projeto:  cd ${projectName}`);
+   console.log('   2. Instale dependencias:  cd .opencode && npm install');
+   console.log('   3. Abra o projeto:     opencode');
+   console.log('   4. Execute:            /aiox-init');
+   console.log('   5. Veja ajuda:        /aiox-help');
   console.log('');
   console.log(' Comandos disponiveis:');
   console.log('   /aiox-help       - Ajuda do framework');
