@@ -14,7 +14,10 @@ Uma fusão de dois frameworks poderosos:
 ## Início Rápido
 
 ```bash
-# Criar novo projeto (via GitHub - funciona sem publicar no npm)
+# 1. Habilitar fetch git (necessário apenas na primeira vez)
+npm config set fetchAllowGit true
+
+# 2. Criar novo projeto
 npx github:marcelojrrangel/aiox-superpowers meu-projeto
 cd meu-projeto
 opencode

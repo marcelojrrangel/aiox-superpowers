@@ -1,11 +1,10 @@
 {
-  "name": "aiox-superpowers",
-  "version": "1.0.0",
+  "name": "create-aiox-superpowers",
+  "version": "1.0.1",
   "description": "Hybrid framework combining AIOX Core multi-agent orchestration with Superpowers skill-driven methodology for OpenCode CLI",
-  "type": "module",
   "main": ".opencode/plugins/aiox-superpowers.js",
   "bin": {
-    "create-aiox-superpowers": "./bin/create-aiox-superpowers.cjs"
+    "create-aiox-superpowers": "./bin/create-aiox-superpowers.js"
   },
   "keywords": [
     "aiox",
