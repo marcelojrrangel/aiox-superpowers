@@ -109,8 +109,6 @@ function main() {
 
   const FILES_TO_COPY = [
     '.opencode/AGENTS.md',
-    '.opencode/package.json',
-    '.opencode/package-lock.json',
     'opencode.json',
   ];
 
@@ -154,6 +152,22 @@ function main() {
     } else if (copyFile(src, dst)) {
       console.log(`  ${file} -> ${file}`);
     }
+  }
+
+  const opencodePackageJson = path.join(targetDir, '.opencode', 'package.json');
+  if (!fs.existsSync(opencodePackageJson)) {
+    fs.writeFileSync(
+      opencodePackageJson,
+      JSON.stringify({ dependencies: { '@opencode-ai/plugin': '1.17.18' } }, null, 2) + '\n'
+    );
+    console.log('  .opencode/package.json -> .opencode/package.json');
+  }
+
+  const opencodeLock = path.join(SOURCE_ROOT, '.opencode', 'package-lock.json');
+  const dstLock = path.join(targetDir, '.opencode', 'package-lock.json');
+  if (fs.existsSync(opencodeLock)) {
+    copyFile(opencodeLock, dstLock);
+    console.log('  .opencode/package-lock.json -> .opencode/package-lock.json');
   }
 
   console.log('');
