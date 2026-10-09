@@ -26,6 +26,9 @@ DIRS_TO_COPY=(
   ".opencode/tools"
   ".opencode/plugins"
   ".aiox-core"
+  ".clinerules"
+  ".cline/workflows"
+  "memory-bank-template"
 )
 
 FILES_TO_COPY=(
@@ -33,6 +36,7 @@ FILES_TO_COPY=(
   ".opencode/package.json"
   ".opencode/package-lock.json"
   "opencode.json"
+  "AGENTS.md"
 )
 
 DIRS_TO_CREATE=(
@@ -40,6 +44,7 @@ DIRS_TO_CREATE=(
   "$TARGET/docs/designs"
   "$TARGET/docs/plans"
   "$TARGET/.agent/workflows"
+  "$TARGET/memory-bank"
 )
 
 copy_if_newer() {
@@ -97,12 +102,24 @@ show_summary() {
   echo ""
   echo " Projeto : $TARGET"
   echo ""
-  echo " Estrutura adicionada:"
+  echo " Estrutura adicionada (OpenCode):"
   echo "   .opencode/AGENTS.md   - Instrucoes mestre"
   echo "   .opencode/skills/     - 21 skills"
   echo "   .opencode/tools/      - 4 tools"
   echo "   .opencode/plugins/    - Plugin bootstrap"
   echo "   .aiox-core/workflows/ - 6 workflows"
+  echo ""
+  echo " Estrutura adicionada (Cline):"
+  echo "   AGENTS.md             - Indice + comandos em linguagem natural"
+  echo "   .clinerules/          - Rules persistentes (mestre, memory-bank, TDD)"
+  echo "   .cline/skills/        - 22 skills (formato Cline)"
+  echo "   .cline/workflows/     - 6 workflows em markdown"
+  echo "   memory-bank/          - Memoria persistente entre sessoes"
+  echo ""
+  echo " Proximos passos (Cline):"
+  echo "   1. Abra o projeto no VS Code com Cline"
+  echo "   2. Peca: \"inicie um brainstorm sobre <ideia>\""
+  echo "   3. Ou: \"execute o workflow full-cycle para <feature>\""
   echo ""
   echo " Proximos passos:"
   echo "   1. Abra o projeto:  opencode"
@@ -161,6 +178,25 @@ done
 if [ "$DRY_RUN" = false ]; then
   log "Installing .opencode dependencies..."
   (cd "$TARGET/.opencode" && npm install) && log "  npm install OK" || warn "  npm install failed, run: cd .opencode && npm install"
+fi
+
+if [ -d "$TARGET/memory-bank-template" ]; then
+  proj_name="$(basename "$TARGET")"
+  for f in "$TARGET"/memory-bank-template/*; do
+    [ -f "$f" ] || continue
+    base="$(basename "$f")"
+    sed "s/<nome-do-projeto>/$proj_name/g" "$f" > "$TARGET/memory-bank/$base"
+  done
+  if [ "$DRY_RUN" = false ]; then
+    rm -rf "$TARGET/memory-bank-template"
+  fi
+  log "  memory-bank-template/ -> memory-bank/ (inicializado)"
+fi
+
+if [ -d "$TARGET/.opencode/skills" ] && [ "$DRY_RUN" = false ]; then
+  mkdir -p "$TARGET/.cline/skills"
+  cp -r "$TARGET/.opencode/skills/"* "$TARGET/.cline/skills/"
+  log "  .opencode/skills -> .cline/skills (formato Cline compativel)"
 fi
 
 show_summary

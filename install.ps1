@@ -14,21 +14,26 @@ $DirsToCopy = @(
   @{Src = ".opencode/skills";     Dst = ".opencode/skills"},
   @{Src = ".opencode/tools";     Dst = ".opencode/tools"},
   @{Src = ".opencode/plugins";   Dst = ".opencode/plugins"},
-  @{Src = ".aiox-core";          Dst = ".aiox-core"}
+  @{Src = ".aiox-core";          Dst = ".aiox-core"},
+  @{Src = ".clinerules";         Dst = ".clinerules"},
+  @{Src = ".cline/workflows";    Dst = ".cline/workflows"},
+  @{Src = "memory-bank-template"; Dst = "memory-bank-template"}
 )
 
 $FilesToCopy = @(
   @{Src = ".opencode/AGENTS.md";         Dst = ".opencode/AGENTS.md"},
   @{Src = ".opencode/package.json";      Dst = ".opencode/package.json"},
   @{Src = ".opencode/package-lock.json"; Dst = ".opencode/package-lock.json"},
-  @{Src = "opencode.json";              Dst = "opencode.json"}
+  @{Src = "opencode.json";              Dst = "opencode.json"},
+  @{Src = "AGENTS.md";                  Dst = "AGENTS.md"}
 )
 
 $DirsToCreate = @(
   "$TARGET\.opencode\logs",
   "$TARGET\docs\designs",
   "$TARGET\docs\plans",
-  "$TARGET\.agent\workflows"
+  "$TARGET\.agent\workflows",
+  "$TARGET\memory-bank"
 )
 
 function Log($msg) { Write-Host ">> $msg" }
@@ -100,12 +105,26 @@ function Show-Summary {
   Write-Host ""
   Write-Host " Projeto : $TARGET"
   Write-Host ""
-  Write-Host " Estrutura adicionada:"
+  Write-Host " Estrutura adicionada (OpenCode):"
   Write-Host "   .opencode/AGENTS.md   - Instrucoes mestre"
   Write-Host "   .opencode/skills/     - 21 skills"
   Write-Host "   .opencode/tools/      - 4 tools (model-router, model-ping, etc)"
   Write-Host "   .opencode/plugins/    - Plugin bootstrap"
   Write-Host "   .aiox-core/workflows/ - 6 workflows"
+  Write-Host ""
+  Write-Host " Estrutura adicionada (Cline):"
+  Write-Host "   AGENTS.md             - Indice + comandos em linguagem natural"
+  Write-Host "   .clinerules/          - Rules persistentes (mestre, memory-bank, TDD)"
+  Write-Host "   .cline/skills/        - 22 skills (formato Cline)"
+  Write-Host "   .cline/workflows/     - 6 workflows em markdown"
+  Write-Host "   memory-bank/          - Memoria persistente entre sessoes"
+  Write-Host ""
+  Write-Host " Proximos passos (Cline):"
+  Write-Host "   1. Abra o projeto no VS Code com Cline"
+  Write-Host '   2. Peca: "inicie um brainstorm sobre <ideia>"'
+  Write-Host '   3. Ou: "execute o workflow full-cycle para <feature>"'
+  Write-Host ""
+  Write-Host " Proximos passos (OpenCode):"
   Write-Host ""
   Write-Host " Proximos passos:"
   Write-Host "   1. Abra o projeto:  opencode"
@@ -179,6 +198,27 @@ if ($DryRun) {
     Write-Warning "  npm install failed, run manually: cd .opencode && npm install"
   }
   Pop-Location
+}
+
+$mbTemplate = Join-Path $TARGET "memory-bank-template"
+$mbTarget = Join-Path $TARGET "memory-bank"
+if (Test-Path $mbTemplate) {
+  Get-ChildItem -Path $mbTemplate -File | ForEach-Object {
+    $content = Get-Content $_.FullName -Raw
+    $projName = Split-Path -Leaf $TARGET
+    $content = $content -replace [regex]::Escape("<nome-do-projeto>"), $projName
+    Set-Content -Path (Join-Path $mbTarget $_.Name) -Value $content -NoNewline
+  }
+  if (-not $DryRun) { Remove-Item -Recurse -Force $mbTemplate }
+  Log "  memory-bank-template/ -> memory-bank/ (inicializado)"
+}
+
+$clineSrc = Join-Path $TARGET ".opencode/skills"
+$clineDst = Join-Path $TARGET ".cline/skills"
+if ((Test-Path $clineSrc) -and (-not $DryRun)) {
+  if (-not (Test-Path $clineDst)) { New-Item -ItemType Directory -Path $clineDst -Force | Out-Null }
+  Copy-Item -Path (Join-Path $clineSrc "*") -Destination $clineDst -Recurse -Force
+  Log "  .opencode/skills -> .cline/skills (formato Cline compativel)"
 }
 
 Show-Summary

@@ -15,7 +15,7 @@ Uma fusão de dois frameworks poderosos:
 
 ```bash
 # 1. Habilitar fetch git (necessário apenas na primeira vez)
-npm config set fetchAllowGit true
+npm config set allow-git root  # npm 12+ (no npm antigo: npm config set fetchAllowGit true)
 
 # 2. Criar novo projeto
 npx github:marcelojrrangel/aiox-superpowers meu-projeto
@@ -28,6 +28,33 @@ opencode
   "instructions": [".opencode/AGENTS.md"]
 }
 ```
+
+## Usando com o Cline
+
+Todo projeto criado ja inclui a camada Cline:
+
+- `AGENTS.md` — indice + comandos em linguagem natural (lido automaticamente pelo Cline)
+- `.clinerules/` — rules persistentes (metodologia AIOX, memory-bank, TDD)
+- `.cline/skills/` — as 22 skills em formato compativel com Cline
+- `.cline/workflows/` — os 6 workflows convertidos para markdown
+- `memory-bank/` — memoria persistente entre sessoes (inicializado com o nome do projeto)
+
+### Como usar
+
+1. Abra o projeto no VS Code com o Cline.
+2. Peca em linguagem natural (equivalentes aos comandos /aiox-* do OpenCode):
+
+| OpenCode | No Cline (diga) |
+|----------|-----------------|
+| `/aiox-brainstorm` | inicie um brainstorm sobre \<ideia\> |
+| `/aiox-plan` | crie um plano de implementacao para \<design\> |
+| `/aiox-workflow` | execute o workflow \<nome\> para \<tarefa\> |
+| `/aiox-story` | desenvolva a user story \<descricao\> |
+| `/aiox-review` | faca um code review de \<arquivos\> |
+| `/aiox-status` | mostre o status do projeto |
+
+Nota: as tools de roteamento de modelos do OpenCode (model-router, usage-report,
+etc.) e os comandos /aiox-cost e /aiox-free-run nao se aplicam ao Cline.
 
 ## O Que Você Recebe
 

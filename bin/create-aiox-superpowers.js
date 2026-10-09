@@ -105,11 +105,16 @@ function main() {
     '.opencode/tools',
     '.opencode/plugins',
     '.aiox-core',
+    '.clinerules',
+    '.cline/skills',
+    '.cline/workflows',
+    'memory-bank-template',
   ];
 
   const FILES_TO_COPY = [
     '.opencode/AGENTS.md',
     'opencode.json',
+    'AGENTS.md',
   ];
 
   const DIRS_TO_CREATE = [
@@ -117,6 +122,7 @@ function main() {
     'docs/designs',
     'docs/plans',
     '.agent/workflows',
+    'memory-bank',
   ];
 
   console.log('');
@@ -170,6 +176,31 @@ function main() {
     console.log('  .opencode/package-lock.json -> .opencode/package-lock.json');
   }
 
+  console.log('>> Instalando camada Cline...');
+  const clineSkillsSrc = path.join(targetDir, '.opencode', 'skills');
+  const clineSkillsDst = path.join(targetDir, '.cline', 'skills');
+  if (fs.existsSync(clineSkillsSrc)) {
+    copyDir(clineSkillsSrc, clineSkillsDst);
+    console.log('  .opencode/skills -> .cline/skills (formato Cline compativel)');
+  }
+
+  console.log('>> Inicializando memory-bank...');
+  const mbTemplate = path.join(targetDir, 'memory-bank-template');
+  const mbTarget = path.join(targetDir, 'memory-bank');
+  if (fs.existsSync(mbTemplate)) {
+    copyDir(mbTemplate, mbTarget);
+    for (const f of fs.readdirSync(mbTarget)) {
+      const fp = path.join(mbTarget, f);
+      if (fs.statSync(fp).isFile()) {
+        let content = fs.readFileSync(fp, 'utf8');
+        content = content.split('<nome-do-projeto>').join(projectName);
+        fs.writeFileSync(fp, content);
+      }
+    }
+    fs.rmSync(mbTemplate, { recursive: true, force: true });
+    console.log('  memory-bank-template/ -> memory-bank/ (inicializado)');
+  }
+
   console.log('');
   console.log('========================================');
   console.log(' AIOX Superpowers instalado com sucesso!');
@@ -177,21 +208,33 @@ function main() {
   console.log('');
   console.log(` Projeto : ${targetDir}`);
   console.log('');
-  console.log(' Estrutura adicionada:');
+  console.log(' Estrutura adicionada (OpenCode):');
   console.log('   .opencode/AGENTS.md   - Instrucoes mestre');
   console.log('   .opencode/skills/     - 22 skills');
   console.log('   .opencode/tools/      - 5 tools');
   console.log('   .opencode/plugins/    - Plugin bootstrap');
   console.log('   .aiox-core/workflows/ - 6 workflows');
   console.log('');
-   console.log(' Proximos passos:');
+  console.log(' Estrutura adicionada (Cline):');
+  console.log('   AGENTS.md             - Indice + comandos em linguagem natural');
+  console.log('   .clinerules/          - Rules persistentes (mestre, memory-bank, TDD)');
+  console.log('   .cline/skills/        - 22 skills (formato Cline)');
+  console.log('   .cline/workflows/     - 6 workflows em markdown');
+  console.log('   memory-bank/          - Memoria persistente entre sessoes');
+  console.log('');
+   console.log(' Proximos passos (OpenCode):');
    console.log(`   1. Acesse o projeto:  cd ${projectName}`);
    console.log('   2. Instale dependencias:  cd .opencode && npm install');
    console.log('   3. Abra o projeto:     opencode');
    console.log('   4. Execute:            /aiox-init');
    console.log('   5. Veja ajuda:        /aiox-help');
   console.log('');
-  console.log(' Comandos disponiveis:');
+  console.log(' Proximos passos (Cline):');
+  console.log(`   1. Abra ${projectName} no VS Code com Cline`);
+  console.log('   2. Peca: "inicie um brainstorm sobre <ideia>"');
+  console.log('   3. Ou: "execute o workflow full-cycle para <feature>"');
+  console.log('');
+  console.log(' Comandos disponiveis (OpenCode):');
   console.log('   /aiox-help       - Ajuda do framework');
   console.log('   /aiox-brainstorm - Sessao de brainstorming');
   console.log('   /aiox-plan       - Criar plano de implementacao');
